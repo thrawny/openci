@@ -39,6 +39,9 @@ func Run() error {
 	if err != nil {
 		return err
 	}
-	remote := git.ParseGitURL(url)
+	remote, err := git.ParseGitURL(url)
+	if err != nil {
+		return err
+	}
 	return open.Run(ciProvider.GetProjectURL(remote))
 }

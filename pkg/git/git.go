@@ -1,6 +1,7 @@
 package git
 
 import (
+	"fmt"
 	"github.com/thrawny/openci/pkg/util"
 	"os/exec"
 	"path"
@@ -16,13 +17,16 @@ type Remote struct {
 	Project string
 }
 
-func ParseGitURL(url string) Remote {
+func ParseGitURL(url string) (Remote, error) {
 	matches := re.FindStringSubmatch(url)
+	if !(len(matches) >= 6) {
+		return Remote{}, fmt.Errorf("could not parse git url: %s", url)
+	}
 	return Remote{
 		Domain:  matches[3],
 		Org:     matches[4],
 		Project: matches[5],
-	}
+	}, nil
 }
 
 func IsGitRepo(wd string) bool {
