@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+var re = regexp.MustCompile(`(?m)^(https|git)(://|@)([^/:]+)[/:]([^/:]+)/([^\.]+)(\.git)?$`)
+
 type Remote struct {
 	Domain  string
 	Org     string
@@ -15,7 +17,6 @@ type Remote struct {
 }
 
 func ParseGitURL(url string) Remote {
-	re := regexp.MustCompile(`(?m)^(https|git)(://|@)([^/:]+)[/:]([^/:]+)/([^\.]+)(\.git)?$`)
 	matches := re.FindStringSubmatch(url)
 	return Remote{
 		Domain:  matches[3],
