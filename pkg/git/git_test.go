@@ -15,7 +15,7 @@ func TestParseGitURL(t *testing.T) {
 		want Remote
 	}{
 		{
-			name: "foo",
+			name: "git@",
 			args: args{
 				url: "git@github.com:thrawny/openci.git",
 			},
@@ -26,9 +26,20 @@ func TestParseGitURL(t *testing.T) {
 			},
 		},
 		{
-			name: "foo",
+			name: "https",
 			args: args{
 				url: "https://github.com/some-user/my-repo.git",
+			},
+			want: Remote{
+				Domain:  "github.com",
+				Org:     "some-user",
+				Project: "my-repo",
+			},
+		},
+		{
+			name: "https without .git",
+			args: args{
+				url: "https://github.com/some-user/my-repo",
 			},
 			want: Remote{
 				Domain:  "github.com",
