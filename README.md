@@ -1,5 +1,8 @@
 # openci
 
+[![CircleCI](https://circleci.com/gh/thrawny/openci.svg?style=svg)](https://circleci.com/gh/thrawny/openci) 
+[![Go Report Card](https://goreportcard.com/badge/github.com/thrawny/openci)](https://goreportcard.com/report/github.com/thrawny/openci)
+
 Simple tool to open the ci build url of a repository.
 
 
