@@ -1,12 +1,11 @@
 package git
 
 import (
+	"errors"
 	"fmt"
 	"github.com/thrawny/openci/pkg/util"
 	"os/exec"
-	"path"
 	"regexp"
-	"strings"
 )
 
 var re = regexp.MustCompile(`(?m)^(https|git)(://|@)([^/:]+)[/:]([^/:]+)/([^\.]+)(\.git)?$`)
@@ -29,16 +28,22 @@ func ParseGitURL(url string) (Remote, error) {
 	}, nil
 }
 
-func IsGitRepo(wd string) bool {
-	return util.FileExists(path.Join(wd, ".git"))
+func RepoRoot(wd string) (string, error) {
+	cmd := exec.Command("git", "rev-parse", "--show-toplevel")
+	cmd.Dir = wd
+	res, err := util.RunCmd(cmd)
+	if err != nil {
+		return "", errors.New(res)
+	}
+	return res, nil
 }
 
 func RemoteURL(wd string) (string, error) {
 	cmd := exec.Command("git", "config", "--get", "remote.origin.url")
 	cmd.Dir = wd
-	out, err := cmd.Output()
+	res, err := util.RunCmd(cmd)
 	if err != nil {
-		return "", err
+		return "", errors.New(res)
 	}
-	return strings.TrimSpace(string(out)), nil
+	return res, nil
 }

@@ -20,7 +20,7 @@ func CiProvider(wd string) (providers.Provider, error) {
 	if util.FileExists(path.Join(wd, "wercker.yml")) {
 		return providers.Wercker{}, nil
 	}
-	return nil, errors.New("could not open a ci provider")
+	return nil, errors.New("could not detect a ci provider")
 }
 
 func Run() error {
@@ -28,14 +28,15 @@ func Run() error {
 	if err != nil {
 		return err
 	}
-	if !git.IsGitRepo(wd) {
-		return errors.New("current directory is not a git repository")
-	}
-	url, err := git.RemoteURL(wd)
+	repoRoot, err := git.RepoRoot(wd)
 	if err != nil {
 		return err
 	}
-	ciProvider, err := CiProvider(wd)
+	url, err := git.RemoteURL(repoRoot)
+	if err != nil {
+		return err
+	}
+	ciProvider, err := CiProvider(repoRoot)
 	if err != nil {
 		return err
 	}
