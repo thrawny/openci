@@ -6,7 +6,6 @@ import (
 	"github.com/thrawny/openci/pkg/git"
 	"github.com/thrawny/openci/pkg/providers"
 	"github.com/thrawny/openci/pkg/util"
-	"os"
 	"path"
 )
 
@@ -23,11 +22,7 @@ func CiProvider(wd string) (providers.Provider, error) {
 	return nil, errors.New("could not detect a ci provider")
 }
 
-func Run() error {
-	wd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
+func Run(wd string) error {
 	repoRoot, err := git.RepoRoot(wd)
 	if err != nil {
 		return err
