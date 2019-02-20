@@ -10,7 +10,7 @@ var Directory string
 
 var rootCmd = &cobra.Command{
 	Use:   "openci",
-	Short: "Run the ci build url of a repository",
+	Short: "Open the ci build url of a repository",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return open.Run(Directory)
 	},
