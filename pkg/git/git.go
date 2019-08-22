@@ -47,3 +47,13 @@ func RemoteURL(wd string) (string, error) {
 	}
 	return res, nil
 }
+
+func Branch(wd string) (string, error) {
+	cmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
+	cmd.Dir = wd
+	res, err := util.RunCmd(cmd)
+	if err != nil {
+		return "", errors.New(res)
+	}
+	return res, nil
+}

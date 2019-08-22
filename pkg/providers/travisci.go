@@ -9,6 +9,6 @@ const travisBaseURL = "https://travis-ci.org"
 
 type TravisCI struct{}
 
-func (TravisCI) GetProjectURL(remote git.Remote) string {
+func (TravisCI) GetProjectURL(remote git.Remote, branch string) string {
 	return fmt.Sprintf("%s/%s/%s", travisBaseURL, remote.Org, remote.Project)
 }

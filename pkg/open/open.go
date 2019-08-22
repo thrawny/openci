@@ -39,5 +39,9 @@ func Run(wd string) error {
 	if err != nil {
 		return err
 	}
-	return open.Run(ciProvider.GetProjectURL(remote))
+	branch, err := git.Branch(wd)
+	if err != nil {
+		return err
+	}
+	return open.Run(ciProvider.GetProjectURL(remote, branch))
 }

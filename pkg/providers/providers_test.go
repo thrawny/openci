@@ -10,6 +10,7 @@ func TestProviders(t *testing.T) {
 	type args struct {
 		remote   git.Remote
 		provider Provider
+		branch   string
 	}
 	tests := []struct {
 		name     string
@@ -25,8 +26,9 @@ func TestProviders(t *testing.T) {
 					Project: "baz",
 				},
 				provider: CirleCI{},
+				branch:   "qux",
 			},
-			expected: "https://circleci.com/gh/foo/baz",
+			expected: "https://circleci.com/gh/foo/workflows/baz/tree/qux",
 		},
 		{
 			name: "wercker",
@@ -37,6 +39,7 @@ func TestProviders(t *testing.T) {
 					Project: "baz",
 				},
 				provider: Wercker{},
+				branch:   "qux",
 			},
 			expected: "https://app.wercker.com/foo/baz",
 		},
@@ -49,13 +52,14 @@ func TestProviders(t *testing.T) {
 					Project: "baz",
 				},
 				provider: TravisCI{},
+				branch:   "qux",
 			},
 			expected: "https://travis-ci.org/foo/baz",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.expected, tt.args.provider.GetProjectURL(tt.args.remote))
+			assert.Equal(t, tt.expected, tt.args.provider.GetProjectURL(tt.args.remote, tt.args.branch))
 		})
 	}
 }
