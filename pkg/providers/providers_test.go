@@ -56,6 +56,19 @@ func TestProviders(t *testing.T) {
 			},
 			expected: "https://travis-ci.org/foo/baz",
 		},
+		{
+			name: "github actions",
+			args: args{
+				remote: git.Remote{
+					Domain:  "github.com",
+					Org:     "foo",
+					Project: "baz",
+				},
+				provider: GitHubActions{},
+				branch:   "qux",
+			},
+			expected: "https://github.com/foo/baz/actions?query=branch%3Dqux",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

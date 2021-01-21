@@ -16,6 +16,9 @@ func CiProvider(wd string) (providers.Provider, error) {
 	if util.FileExists(path.Join(wd, ".travis.yml")) {
 		return providers.TravisCI{}, nil
 	}
+	if util.FileExists(path.Join(wd, ".github/workflows")) {
+		return providers.GitHubActions{}, nil
+	}
 	if util.FileExists(path.Join(wd, "wercker.yml")) {
 		return providers.Wercker{}, nil
 	}
