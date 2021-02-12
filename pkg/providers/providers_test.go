@@ -65,9 +65,9 @@ func TestProviders(t *testing.T) {
 					Project: "baz",
 				},
 				provider: GitHubActions{},
-				branch:   "qux",
+				branch:   "feature/qux",
 			},
-			expected: "https://github.com/foo/baz/actions?query=branch%3Dqux",
+			expected: "https://github.com/foo/baz/actions?query=branch%3Afeature%2Fqux",
 		},
 	}
 	for _, tt := range tests {
